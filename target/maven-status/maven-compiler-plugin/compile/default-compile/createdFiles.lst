@@ -1,1 +1,7 @@
+tg\dksoft\publication\model\Publisher.class
+tg\dksoft\publication\model\Publication.class
+tg\dksoft\publication\model\AbstractModel.class
+tg\dksoft\publication\model\Author.class
+tg\dksoft\publication\model\BlogPost.class
+tg\dksoft\publication\model\Book.class
 tg\dksoft\publication\PublicationApplication.class

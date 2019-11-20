@@ -54,7 +54,7 @@ public class Author extends AbstractModel implements Serializable {
 
     @ManyToMany(mappedBy = "authors")
     public Set<Publication> getPublications() {
-        return publications;
+        return this.publications;
     }
 
     public void setPublications(Set<Publication> publications) {

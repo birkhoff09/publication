@@ -6,13 +6,15 @@
 package tg.dksoft.publication.model;
 
 import java.io.Serializable;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
  *
  * @author Birkhoff
  */
-@Entity(name = "blog_post")
+@Entity
+@DiscriminatorValue(value = "post")
 class BlogPost extends Publication implements Serializable {
 
 }

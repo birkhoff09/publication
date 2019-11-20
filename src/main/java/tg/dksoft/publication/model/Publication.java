@@ -9,11 +9,14 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,8 +24,10 @@ import javax.persistence.TemporalType;
  *
  * @author Birkhoff
  */
-@MappedSuperclass
-class Publication extends AbstractModel {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "typePublication")
+@Entity(name = "publication")
+public abstract class Publication extends AbstractModel {
 
     protected Long id;
     protected String title;

@@ -7,6 +7,8 @@ package tg.dksoft.publication.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -15,10 +17,21 @@ import javax.persistence.ManyToOne;
  *
  * @author Birkhoff
  */
-@Entity(name = "book")
+@Entity
+@DiscriminatorValue(value = "book")
 class Book extends Publication implements Serializable {
 
+    private int pages;
     private Publisher publisher;
+
+    @Column(name = "pages")
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     public Publisher getPublisher() {
