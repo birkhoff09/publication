@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tg.dksoft.publication.service;
-
-import tg.dksoft.publication.model.Author;
+package tg.dksoft.publication.security;
 
 /**
  *
  * @author Birkhoff
  */
-public interface IAuthorService extends IService<Long, Author> {
-
+public class CustomUserDetailsService {
+    
 }

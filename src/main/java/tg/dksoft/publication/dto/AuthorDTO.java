@@ -3,38 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tg.dksoft.publication.model;
+package tg.dksoft.publication.dto;
 
-import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import tg.dksoft.publication.model.Author;
 
 /**
  *
  * @author Birkhoff
  */
-@Entity(name = "author")
-public class Author extends AbstractModel implements Serializable {
+public class AuthorDTO {
 
-//    private Long id;
     private String firstName;
     private String lastName;
-    private Set<Publication> publications;
+    private Set<PublicationDTO> publications;
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    public AuthorDTO(Author author) {
+        this.firstName = author.getFirstName();
+        this.lastName = author.getLastName();
+        this.publications = new HashSet<>();
+        author.getPublications().forEach(publication -> {
+            publications.add(new PublicationDTO(publication.getTitle(), publication.getDatePublication()));
+        });
+    }
 
-    @Column(name = "firstname", nullable = false, length = 75)
+    AuthorDTO(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -43,7 +42,6 @@ public class Author extends AbstractModel implements Serializable {
         this.firstName = firstName;
     }
 
-    @Column(name = "lastname", nullable = false, length = 150)
     public String getLastName() {
         return lastName;
     }
@@ -52,19 +50,17 @@ public class Author extends AbstractModel implements Serializable {
         this.lastName = lastName;
     }
 
-    @ManyToMany(mappedBy = "authors")
-    public Set<Publication> getPublications() {
+    public Set<PublicationDTO> getPublications() {
         return this.publications;
     }
 
-    public void setPublications(Set<Publication> publications) {
+    public void setPublications(Set<PublicationDTO> publications) {
         this.publications = publications;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.id);
         hash = 29 * hash + Objects.hashCode(this.firstName);
         hash = 29 * hash + Objects.hashCode(this.lastName);
         hash = 29 * hash + Objects.hashCode(this.publications);
@@ -82,14 +78,11 @@ public class Author extends AbstractModel implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Author other = (Author) obj;
+        final AuthorDTO other = (AuthorDTO) obj;
         if (!Objects.equals(this.firstName, other.firstName)) {
             return false;
         }
         if (!Objects.equals(this.lastName, other.lastName)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.publications, other.publications)) {

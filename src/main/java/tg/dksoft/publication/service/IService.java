@@ -12,24 +12,76 @@ import javax.persistence.criteria.CriteriaQuery;
 /**
  *
  * @author Birkhoff
+ * @param <U>
  * @param <T>
  */
-public interface IService<T> {
+public interface IService<U, T> {
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public T find(U id);
+
+    /**
+     *
+     * @return
+     */
+    public List<T> findAll();
+
+    /**
+     *
+     * @param t
+     * @return
+     */
     public T save(T t);
 
+    /**
+     *
+     * @param ts
+     * @return
+     */
     public List<T> saveAll(List<T> ts);
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     public T update(T t);
 
+    /**
+     *
+     * @param t
+     */
     public void delete(T t);
 
+    /**
+     *
+     * @param ts
+     */
     public void deleteAll(List<T> ts);
 
+    /**
+     *
+     * @param criteria
+     * @return
+     */
     public Query createCriteriaQuery(CriteriaQuery criteria);
 
+    /**
+     *
+     * @param query
+     * @return
+     */
     public Query createSqlQuery(String query);
 
+    /**
+     *
+     * @param query
+     * @return
+     */
     public Query createHqlQuery(String query);
 
 }

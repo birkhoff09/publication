@@ -5,12 +5,12 @@
  */
 package tg.dksoft.publication.service;
 
-import tg.dksoft.publication.model.Author;
+import tg.dksoft.publication.model.Publication;
 
 /**
  *
  * @author Birkhoff
  */
-public interface IAuthorService extends IService<Long, Author> {
-
+public interface IPublicationService extends IService<Long, Publication> {
+    
 }

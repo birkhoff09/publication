@@ -15,41 +15,52 @@ import tg.dksoft.publication.service.IService;
 /**
  *
  * @author Birkhoff
+ * @param <U>
  * @param <T>
  */
-public class ServiceImpl<T extends Serializable> implements IService<T> {
+public abstract class ServiceImpl<U extends Serializable, T extends Serializable> implements IService<U, T> {
 
-    IGenericRepository genericRepository;
-    Class<T> classType;
+    protected IGenericRepository<T> genericRepository;
+    Class<T> clazz;
+
+    public ServiceImpl(Class<T> clazz, IGenericRepository<T> genericRepository) {
+        this.clazz = clazz;
+        this.genericRepository = genericRepository;
+    }
+
+    @Override
+    public T find(U id) {
+        return (T) genericRepository.createHqlQuery("FROM " + clazz.getName() + " WHERE id=" + id).getSingleResult();
+    }
+
+    @Override
+    public List<T> findAll() {
+        return genericRepository.createHqlQuery("FROM " + clazz.getName()).getResultList();
+    }
 
     @Override
     public T save(T t) {
-        return genericRepository.save(t);
+        return (T) genericRepository.save(t);
     }
 
     @Override
     public List<T> saveAll(List<T> ts) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return genericRepository.saveAll(ts);
     }
 
     @Override
     public T update(T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (T) genericRepository.update(t);
     }
 
     @Override
     public void delete(T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        genericRepository.delete(t);
     }
 
     @Override
     public void deleteAll(List<T> ts) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public ServiceImpl(Class<T> classType, IGenericRepository genericRepository) {
-        this.classType = classType;
-        this.genericRepository = genericRepository;
+        genericRepository.deleteAll(ts);
     }
 
     @Override

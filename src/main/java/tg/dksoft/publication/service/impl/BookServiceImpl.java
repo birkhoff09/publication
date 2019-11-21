@@ -8,10 +8,9 @@ package tg.dksoft.publication.service.impl;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tg.dksoft.publication.model.Author;
-import tg.dksoft.publication.repository.AuthorRepository;
+import tg.dksoft.publication.model.Book;
 import tg.dksoft.publication.repository.IGenericRepository;
-import tg.dksoft.publication.service.IAuthorService;
+import tg.dksoft.publication.service.IBookService;
 
 /**
  *
@@ -19,11 +18,11 @@ import tg.dksoft.publication.service.IAuthorService;
  */
 @Service
 @Transactional
-public class AuthorServiceImpl extends ServiceImpl<Long, Author> implements IAuthorService {
+public class BookServiceImpl extends ServiceImpl<Long, Book> implements IBookService {
 
     @Autowired
-    public AuthorServiceImpl(AuthorRepository repository, IGenericRepository<Author> genericRepository) {
-        super(Author.class, genericRepository);
+    public BookServiceImpl(IGenericRepository<Book> genericRepository) {
+        super(Book.class, genericRepository);
     }
 
 }

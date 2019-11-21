@@ -55,7 +55,7 @@ public class GenericRepositoryImpl<T extends Serializable> implements IGenericRe
 
     @Override
     public void deleteAll(List<T> ts) {
-        ts.forEach(t->{
+        ts.forEach(t -> {
             em.remove(em.merge(t));
         });
     }

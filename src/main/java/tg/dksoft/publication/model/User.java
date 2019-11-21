@@ -10,7 +10,6 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,22 +21,27 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User extends AbstractModel implements Serializable {
 
-    private Long id;
+//    private Long id;
 
     String firstName;
     String lastName;
     String login;
     String password;
+    boolean accountNonExpired;
+    boolean accountNonLocked;
+    boolean credentialsNonExpired;
+    boolean enabled;
     private Role role;
 
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     @Column(name = "fistname", length = 50)
     public String getFirstName() {
@@ -73,6 +77,42 @@ public class User extends AbstractModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Column(name = "account_non_expired")
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    @Column(name = "account_non_locked")
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    @Column(name = "credentials_non_expired")
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Column(name = "enabled")
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)

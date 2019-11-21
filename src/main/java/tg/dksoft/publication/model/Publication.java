@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -30,19 +29,20 @@ import javax.persistence.TemporalType;
 @Entity(name = "publication")
 public abstract class Publication extends AbstractModel implements Serializable {
 
-    protected Long id;
+//    protected Long id;
     protected String title;
     protected Date datePublication;
     protected Set<Author> authors;
 
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     @Column(name = "title", nullable = false, length = 255)
     public String getTitle() {

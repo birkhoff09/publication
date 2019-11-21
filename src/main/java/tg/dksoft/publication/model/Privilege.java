@@ -6,29 +6,22 @@
 package tg.dksoft.publication.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Birkhoff
  */
+@Entity
+@Table(name = "privilege")
 public class Privilege extends AbstractModel implements Serializable {
 
-    Long id;
     String privilege;
-    List<Role> roles;
-
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    Set<Role> roles;
 
     @Column(name = "privilege", length = 75, nullable = false)
     public String getPrivilege() {
@@ -40,11 +33,11 @@ public class Privilege extends AbstractModel implements Serializable {
     }
 
     @ManyToMany(mappedBy = "privileges")
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

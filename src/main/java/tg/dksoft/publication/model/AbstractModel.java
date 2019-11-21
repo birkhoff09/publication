@@ -7,6 +7,10 @@ package tg.dksoft.publication.model;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -17,11 +21,23 @@ import org.springframework.data.annotation.CreatedDate;
  *
  * @author Birkhoff
  */
+@MappedSuperclass
 public abstract class AbstractModel {
 
+    protected Long id;
     protected int version;
     protected Date createDate;
     protected Date updateDate;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Version
     public int getVersion() {
@@ -32,19 +48,19 @@ public abstract class AbstractModel {
         this.version = version;
     }
 
+    @CreatedDate
+    @Column(name = "create_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreateDate() {
         return createDate;
     }
 
-    @CreatedDate
-    @Column(name = "createDate", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
     @UpdateTimestamp
-    @Column(name = "updateDate")
+    @Column(name = "update_date")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getUpdateDate() {
         return updateDate;

@@ -12,7 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 /**
@@ -22,18 +21,19 @@ import javax.persistence.OneToMany;
 @Entity(name = "publisher")
 public class Publisher extends AbstractModel implements Serializable {
 
-    private Long id;
+//    private Long id;
     private String name;
     private Set<Book> books; 
 
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     @Column(name = "name", nullable = false, length = 255)
     public String getName() {
