@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
  * @author Birkhoff
  */
 @Entity(name = "publisher")
-class Publisher extends AbstractModel implements Serializable {
+public class Publisher extends AbstractModel implements Serializable {
 
     private Long id;
     private String name;

@@ -5,10 +5,8 @@
  */
 package tg.dksoft.publication.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -19,11 +17,11 @@ import org.springframework.data.annotation.CreatedDate;
  *
  * @author Birkhoff
  */
-public class AbstractModel {
+public abstract class AbstractModel {
 
-    private int version;
-    private Date createDate;
-    private Date updateDate;
+    protected int version;
+    protected Date createDate;
+    protected Date updateDate;
 
     @Version
     public int getVersion() {

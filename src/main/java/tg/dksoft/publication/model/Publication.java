@@ -5,6 +5,7 @@
  */
 package tg.dksoft.publication.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -27,7 +28,7 @@ import javax.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "typePublication")
 @Entity(name = "publication")
-public abstract class Publication extends AbstractModel {
+public abstract class Publication extends AbstractModel implements Serializable {
 
     protected Long id;
     protected String title;

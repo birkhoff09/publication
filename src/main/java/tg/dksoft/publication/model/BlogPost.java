@@ -5,7 +5,7 @@
  */
 package tg.dksoft.publication.model;
 
-import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -15,6 +15,17 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue(value = "post")
-class BlogPost extends Publication implements Serializable {
+public class BlogPost extends Publication {
+
+    String url;
+
+    @Column(name = "url", length = 512)
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
 }
