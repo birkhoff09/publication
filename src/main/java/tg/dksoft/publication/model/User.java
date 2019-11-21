@@ -12,20 +12,20 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Birkhoff
  */
 @Entity
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "userName"))
 public class User extends AbstractModel implements Serializable {
 
 //    private Long id;
-
     String firstName;
     String lastName;
-    String login;
+    String userName;
     String password;
     boolean accountNonExpired;
     boolean accountNonLocked;
@@ -42,7 +42,6 @@ public class User extends AbstractModel implements Serializable {
 //    public void setId(Long id) {
 //        this.id = id;
 //    }
-
     @Column(name = "fistname", length = 50)
     public String getFirstName() {
         return firstName;
@@ -61,13 +60,13 @@ public class User extends AbstractModel implements Serializable {
         this.lastName = lastName;
     }
 
-    @Column(name = "login", length = 50)
-    public String getLogin() {
-        return login;
+    @Column(name = "username", length = 50)
+    public String getUserName() {
+        return userName;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Column(name = "password", length = 100)
@@ -129,7 +128,7 @@ public class User extends AbstractModel implements Serializable {
         int hash = 3;
         hash = 67 * hash + Objects.hashCode(this.firstName);
         hash = 67 * hash + Objects.hashCode(this.lastName);
-        hash = 67 * hash + Objects.hashCode(this.login);
+        hash = 67 * hash + Objects.hashCode(this.userName);
         hash = 67 * hash + Objects.hashCode(this.password);
         return hash;
     }
@@ -152,7 +151,7 @@ public class User extends AbstractModel implements Serializable {
         if (!Objects.equals(this.lastName, other.lastName)) {
             return false;
         }
-        if (!Objects.equals(this.login, other.login)) {
+        if (!Objects.equals(this.userName, other.userName)) {
             return false;
         }
         if (!Objects.equals(this.password, other.password)) {

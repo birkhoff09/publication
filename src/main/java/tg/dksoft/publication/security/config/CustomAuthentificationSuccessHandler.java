@@ -9,6 +9,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -16,10 +19,14 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  *
  * @author Birkhoff
  */
+@Configuration
 public class CustomAuthentificationSuccessHandler implements AuthenticationSuccessHandler {
-
+    
+    Logger logger = LoggerFactory.getLogger(CustomAuthentificationSuccessHandler.class);
+    
     @Override
     public void onAuthenticationSuccess(HttpServletRequest hsr, HttpServletResponse hsr1, Authentication a) throws IOException, ServletException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        logger.debug("User {} is login successfully", hsr.getUserPrincipal());
+        // Token generation stuff
     }
 }

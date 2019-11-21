@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tg.dksoft.publication.security.config;
+package tg.dksoft.publication.service;
+
+import tg.dksoft.publication.model.Publisher;
 
 /**
  *
  * @author Birkhoff
  */
-public class CustomEndPointAuthentificationManager {
-
+public interface IPublisherService extends IService<Long, Publisher> {
+    
 }

@@ -12,5 +12,11 @@ import tg.dksoft.publication.model.User;
  * @author Birkhoff
  */
 public interface IUserService extends IService<Long, User> {
-    
+
+    /**
+     *
+     * @param userName
+     * @return
+     */
+    User findByUserName(String userName);
 }

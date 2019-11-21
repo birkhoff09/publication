@@ -14,4 +14,5 @@ import tg.dksoft.publication.model.User;
  */
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    public User findByUserName(String userName);
 }

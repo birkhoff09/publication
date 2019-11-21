@@ -49,7 +49,7 @@ public abstract class AbstractModel {
     }
 
     @CreatedDate
-    @Column(name = "create_date", nullable = false)
+    @Column(name = "create_date")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getCreateDate() {
         return createDate;

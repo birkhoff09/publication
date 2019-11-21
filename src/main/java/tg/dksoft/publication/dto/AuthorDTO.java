@@ -5,9 +5,7 @@
  */
 package tg.dksoft.publication.dto;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import tg.dksoft.publication.model.Author;
 
 /**
@@ -18,15 +16,10 @@ public class AuthorDTO {
 
     private String firstName;
     private String lastName;
-    private Set<PublicationDTO> publications;
 
     public AuthorDTO(Author author) {
         this.firstName = author.getFirstName();
         this.lastName = author.getLastName();
-        this.publications = new HashSet<>();
-        author.getPublications().forEach(publication -> {
-            publications.add(new PublicationDTO(publication.getTitle(), publication.getDatePublication()));
-        });
     }
 
     AuthorDTO(String firstName, String lastName) {
@@ -50,20 +43,12 @@ public class AuthorDTO {
         this.lastName = lastName;
     }
 
-    public Set<PublicationDTO> getPublications() {
-        return this.publications;
-    }
-
-    public void setPublications(Set<PublicationDTO> publications) {
-        this.publications = publications;
-    }
 
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 29 * hash + Objects.hashCode(this.firstName);
         hash = 29 * hash + Objects.hashCode(this.lastName);
-        hash = 29 * hash + Objects.hashCode(this.publications);
         return hash;
     }
 
@@ -83,9 +68,6 @@ public class AuthorDTO {
             return false;
         }
         if (!Objects.equals(this.lastName, other.lastName)) {
-            return false;
-        }
-        if (!Objects.equals(this.publications, other.publications)) {
             return false;
         }
         return true;

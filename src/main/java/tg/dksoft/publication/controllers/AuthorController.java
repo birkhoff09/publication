@@ -21,7 +21,7 @@ import tg.dksoft.publication.utils.ResponseEntityUtil;
  * @author Birkhoff
  */
 @RestController
-@RequestMapping(path = "/author", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/author", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthorController {
 
     IAuthorService service;
@@ -31,8 +31,13 @@ public class AuthorController {
         this.service = service;
     }
 
-    @RequestMapping(name = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<AuthorDTO> getAuthor(@PathVariable Long id) {
-        return  ResponseEntityUtil.createGetResponseEntity(new AuthorDTO(service.find(id)));
+        return ResponseEntityUtil.createGetResponseEntity(new AuthorDTO(service.find(id)));
+    }
+
+    @RequestMapping(path = "/{id}/books", method = RequestMethod.GET)
+    public ResponseEntity<AuthorDTO> getAuthorBooks(@PathVariable Long id) {
+        return ResponseEntityUtil.createGetResponseEntity(new AuthorDTO(service.find(id)));
     }
 }

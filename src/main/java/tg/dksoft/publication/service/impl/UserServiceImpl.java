@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import tg.dksoft.publication.model.User;
 import tg.dksoft.publication.repository.IGenericRepository;
+import tg.dksoft.publication.repository.UserRepository;
 import tg.dksoft.publication.service.IUserService;
 
 /**
@@ -19,8 +20,16 @@ import tg.dksoft.publication.service.IUserService;
 @Transactional
 public class UserServiceImpl extends ServiceImpl<Long, User> implements IUserService {
 
-    public UserServiceImpl(IGenericRepository<User> genericRepository) {
+    UserRepository repository;
+
+    public UserServiceImpl(UserRepository repository, IGenericRepository<User> genericRepository) {
         super(User.class, genericRepository);
+        this.repository = repository;
+    }
+
+    @Override
+    public User findByUserName(String userName) {
+        return repository.findByUserName(userName);
     }
 
 }

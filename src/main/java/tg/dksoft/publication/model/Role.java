@@ -36,7 +36,6 @@ public class Role extends AbstractModel implements Serializable {
 //    public void setId(Long id) {
 //        this.id = id;
 //    }
-
     @Column(name = "role_name", length = 75)
     public String getRoleName() {
         return roleName;
@@ -50,7 +49,7 @@ public class Role extends AbstractModel implements Serializable {
             name = "role_privilege",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "privilege_id"))
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     public Set<Privilege> getPrivileges() {
         return privileges;
     }
