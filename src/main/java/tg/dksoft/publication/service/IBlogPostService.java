@@ -5,6 +5,9 @@
  */
 package tg.dksoft.publication.service;
 
+import java.util.List;
+import org.springframework.data.domain.Pageable;
+import tg.dksoft.publication.dto.BlogPostDTO;
 import tg.dksoft.publication.model.BlogPost;
 
 /**
@@ -13,4 +16,11 @@ import tg.dksoft.publication.model.BlogPost;
  */
 public interface IBlogPostService extends IService<Long, BlogPost> {
 
+    /**
+     *
+     * @param authorId
+     * @param pageable
+     * @return
+     */
+    public List<BlogPostDTO> getBlogPostByAuthor(Long authorId, Pageable pageable);
 }

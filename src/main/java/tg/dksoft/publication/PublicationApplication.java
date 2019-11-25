@@ -108,7 +108,7 @@ public class PublicationApplication implements CommandLineRunner {
         admin.setEnabled(true);
         admin.setFirstName("Admin");
         admin.setLastName("Admin");
-        admin.setUserName("admin");
+        admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode("admin"));
         admin.setRole(adminRole);
         userService.save(admin);
@@ -120,7 +120,7 @@ public class PublicationApplication implements CommandLineRunner {
         user.setEnabled(true);
         user.setFirstName("User");
         user.setLastName("User");
-        user.setUserName("user");
+        user.setUsername("user");
         user.setPassword(passwordEncoder.encode("user"));
         user.setRole(userRole);
         userService.save(user);
@@ -155,7 +155,7 @@ public class PublicationApplication implements CommandLineRunner {
 
         Book book2 = new Book();
         book2.setAuthors(Collections.singleton(author2));
-        book2.setPages(250);
+        book2.setPages(360);
         book2.setDatePublication(new Date());
         book2.setTitle("Mon deuxieme livre");
         bookService.save(book2);

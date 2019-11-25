@@ -5,6 +5,7 @@
  */
 package tg.dksoft.publication.repository;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import tg.dksoft.publication.model.User;
 
@@ -14,5 +15,5 @@ import tg.dksoft.publication.model.User;
  */
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    public User findByUserName(String userName);
+    public Optional<User> findByUsername(String username);
 }

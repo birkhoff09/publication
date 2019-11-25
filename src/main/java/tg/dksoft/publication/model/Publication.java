@@ -30,20 +30,10 @@ import javax.persistence.TemporalType;
 @Entity(name = "publication")
 public abstract class Publication extends AbstractModel implements Serializable {
 
-//    protected Long id;
     protected String title;
     protected Date datePublication;
     protected Set<Author> authors;
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
     @Column(name = "title", nullable = false, length = 255)
     public String getTitle() {
         return title;

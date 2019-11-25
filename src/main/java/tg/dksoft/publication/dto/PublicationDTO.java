@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import tg.dksoft.publication.enums.PublicationTypeEnum;
+import tg.dksoft.publication.model.Book;
 import tg.dksoft.publication.model.Publication;
 
 /**
@@ -17,27 +19,35 @@ import tg.dksoft.publication.model.Publication;
  */
 public class PublicationDTO {
 
-    private String title;
-    private Date datePublication;
-    private Set<AuthorDTO> authors;
+    protected String title;
+    protected Date datePublication;
+    protected String typePublication;
+    protected Set<AuthorDTO> authors;
 
     public PublicationDTO(Publication publication) {
         this.title = publication.getTitle();
         this.datePublication = publication.getDatePublication();
+        if (publication instanceof Book) {
+            typePublication = PublicationTypeEnum.BOOK.value();
+        } else {
+            typePublication = PublicationTypeEnum.BLOG_POST.value();
+        }
         this.authors = new HashSet<>();
         publication.getAuthors().forEach(author -> {
             this.authors.add(new AuthorDTO(author.getFirstName(), author.getLastName()));
         });
     }
 
-    PublicationDTO(String title, Date datePublication) {
+    public PublicationDTO(String title, Date datePublication, String typePublication) {
         this.title = title;
         this.datePublication = datePublication;
+        this.typePublication = typePublication;
     }
 
-    public PublicationDTO(String title, Date datePublication, Set<AuthorDTO> authors) {
+    public PublicationDTO(String title, Date datePublication, String typePublication, Set<AuthorDTO> authors) {
         this.title = title;
         this.datePublication = datePublication;
+        this.typePublication = typePublication;
         this.authors = authors;
     }
 
@@ -55,6 +65,14 @@ public class PublicationDTO {
 
     public void setDatePublication(Date datePublication) {
         this.datePublication = datePublication;
+    }
+
+    public String getTypePublication() {
+        return typePublication;
+    }
+
+    public void setTypePublication(String typePublication) {
+        this.typePublication = typePublication;
     }
 
     public Set<AuthorDTO> getAuthors() {

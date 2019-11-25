@@ -5,6 +5,7 @@
  */
 package tg.dksoft.publication.service;
 
+import java.util.Optional;
 import tg.dksoft.publication.model.User;
 
 /**
@@ -13,10 +14,6 @@ import tg.dksoft.publication.model.User;
  */
 public interface IUserService extends IService<Long, User> {
 
-    /**
-     *
-     * @param userName
-     * @return
-     */
-    User findByUserName(String userName);
+    public Optional<User> findByUsername(String username);
+
 }

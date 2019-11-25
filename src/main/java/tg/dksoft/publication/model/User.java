@@ -5,14 +5,20 @@
  */
 package tg.dksoft.publication.model;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
@@ -20,12 +26,11 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "userName"))
-public class User extends AbstractModel implements Serializable {
+public class User extends AbstractModel implements UserDetails {
 
-//    private Long id;
     String firstName;
     String lastName;
-    String userName;
+    String username;
     String password;
     boolean accountNonExpired;
     boolean accountNonLocked;
@@ -33,15 +38,6 @@ public class User extends AbstractModel implements Serializable {
     boolean enabled;
     private Role role;
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
     @Column(name = "fistname", length = 50)
     public String getFirstName() {
         return firstName;
@@ -61,15 +57,17 @@ public class User extends AbstractModel implements Serializable {
     }
 
     @Column(name = "username", length = 50)
-    public String getUserName() {
-        return userName;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Column(name = "password", length = 100)
+    @Override
     public String getPassword() {
         return password;
     }
@@ -79,6 +77,7 @@ public class User extends AbstractModel implements Serializable {
     }
 
     @Column(name = "account_non_expired")
+    @Override
     public boolean isAccountNonExpired() {
         return accountNonExpired;
     }
@@ -88,6 +87,7 @@ public class User extends AbstractModel implements Serializable {
     }
 
     @Column(name = "account_non_locked")
+    @Override
     public boolean isAccountNonLocked() {
         return accountNonLocked;
     }
@@ -97,6 +97,7 @@ public class User extends AbstractModel implements Serializable {
     }
 
     @Column(name = "credentials_non_expired")
+    @Override
     public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
@@ -106,6 +107,7 @@ public class User extends AbstractModel implements Serializable {
     }
 
     @Column(name = "enabled")
+    @Override
     public boolean isEnabled() {
         return enabled;
     }
@@ -124,11 +126,19 @@ public class User extends AbstractModel implements Serializable {
     }
 
     @Override
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(getRole().getRoleName()));
+        return authorities;
+    }
+
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 67 * hash + Objects.hashCode(this.firstName);
         hash = 67 * hash + Objects.hashCode(this.lastName);
-        hash = 67 * hash + Objects.hashCode(this.userName);
+        hash = 67 * hash + Objects.hashCode(this.username);
         hash = 67 * hash + Objects.hashCode(this.password);
         return hash;
     }
@@ -151,7 +161,7 @@ public class User extends AbstractModel implements Serializable {
         if (!Objects.equals(this.lastName, other.lastName)) {
             return false;
         }
-        if (!Objects.equals(this.userName, other.userName)) {
+        if (!Objects.equals(this.username, other.username)) {
             return false;
         }
         if (!Objects.equals(this.password, other.password)) {
