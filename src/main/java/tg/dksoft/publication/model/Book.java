@@ -5,7 +5,6 @@
  */
 package tg.dksoft.publication.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -19,7 +18,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 @DiscriminatorValue(value = "book")
-class Book extends Publication implements Serializable {
+public class Book extends Publication {
 
     private int pages;
     private Publisher publisher;

@@ -5,13 +5,14 @@
  */
 package tg.dksoft.publication.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -27,21 +28,11 @@ import javax.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "typePublication")
 @Entity(name = "publication")
-public abstract class Publication extends AbstractModel {
+public abstract class Publication extends AbstractModel implements Serializable {
 
-    protected Long id;
     protected String title;
     protected Date datePublication;
     protected Set<Author> authors;
-
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Column(name = "title", nullable = false, length = 255)
     public String getTitle() {
@@ -62,7 +53,7 @@ public abstract class Publication extends AbstractModel {
         this.datePublication = datePublication;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "author_publication",
             joinColumns = @JoinColumn(name = "author_id"),

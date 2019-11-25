@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 /**
@@ -20,19 +19,20 @@ import javax.persistence.ManyToMany;
 @Entity(name = "author")
 public class Author extends AbstractModel implements Serializable {
 
-    private Long id;
+//    private Long id;
     private String firstName;
     private String lastName;
     private Set<Publication> publications;
 
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     @Column(name = "firstname", nullable = false, length = 75)
     public String getFirstName() {
