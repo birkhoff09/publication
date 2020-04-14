@@ -24,7 +24,7 @@ public class PrivilegeServiceImpl extends ServiceImpl<Long, Privilege> implement
     PrivilegeRepository repository;
 
     @Autowired
-    public PrivilegeServiceImpl(PrivilegeRepository repository, IGenericRepository<Privilege> genericRepository) {
+    public PrivilegeServiceImpl(PrivilegeRepository repository, IGenericRepository<Long, Privilege> genericRepository) {
         super(Privilege.class, genericRepository);
         this.repository = repository;
     }

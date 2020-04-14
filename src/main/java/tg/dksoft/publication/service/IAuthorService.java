@@ -5,6 +5,10 @@
  */
 package tg.dksoft.publication.service;
 
+import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import tg.dksoft.publication.dto.AuthorDTO;
 import tg.dksoft.publication.model.Author;
 
 /**
@@ -13,4 +17,12 @@ import tg.dksoft.publication.model.Author;
  */
 public interface IAuthorService extends IService<Long, Author> {
 
+    /**
+     *
+     * @param pageable
+     * @return
+     */
+    Page<Author> findByPage(Pageable pageable);
+
+    public List<AuthorDTO> findAuthorsByPublication(Long publicationId);
 }

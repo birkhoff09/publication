@@ -5,6 +5,7 @@
  */
 package tg.dksoft.publication.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 import tg.dksoft.publication.model.Author;
 
@@ -14,10 +15,17 @@ import tg.dksoft.publication.model.Author;
  */
 public class AuthorDTO {
 
+    @JsonProperty(value = "author_id")
+    private Long authorId;
+
+    @JsonProperty(value = "first_name")
     private String firstName;
+
+    @JsonProperty(value = "last_name")
     private String lastName;
 
     public AuthorDTO(Author author) {
+        this.authorId = author.getId();
         this.firstName = author.getFirstName();
         this.lastName = author.getLastName();
     }
@@ -25,6 +33,14 @@ public class AuthorDTO {
     AuthorDTO(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 
     public String getFirstName() {
@@ -42,7 +58,6 @@ public class AuthorDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
 
     @Override
     public int hashCode() {

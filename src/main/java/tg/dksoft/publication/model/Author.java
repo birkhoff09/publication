@@ -8,31 +8,24 @@ package tg.dksoft.publication.model;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Birkhoff
  */
-@Entity(name = "author")
+@Entity
+@Table(name = "author")
 public class Author extends AbstractModel implements Serializable {
 
-//    private Long id;
     private String firstName;
     private String lastName;
-    private Set<Publication> publications;
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    private Set<AuthorPublication> authorPublications;
 
     @Column(name = "firstname", nullable = false, length = 75)
     public String getFirstName() {
@@ -52,13 +45,13 @@ public class Author extends AbstractModel implements Serializable {
         this.lastName = lastName;
     }
 
-    @ManyToMany(mappedBy = "authors")
-    public Set<Publication> getPublications() {
-        return this.publications;
+    @ManyToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public Set<AuthorPublication> getAuthorPublications() {
+        return this.authorPublications;
     }
 
-    public void setPublications(Set<Publication> publications) {
-        this.publications = publications;
+    public void setAuthorPublications(Set<AuthorPublication> authorPublications) {
+        this.authorPublications = authorPublications;
     }
 
     @Override
@@ -67,7 +60,7 @@ public class Author extends AbstractModel implements Serializable {
         hash = 29 * hash + Objects.hashCode(this.id);
         hash = 29 * hash + Objects.hashCode(this.firstName);
         hash = 29 * hash + Objects.hashCode(this.lastName);
-        hash = 29 * hash + Objects.hashCode(this.publications);
+        hash = 29 * hash + Objects.hashCode(this.authorPublications);
         return hash;
     }
 
@@ -92,7 +85,7 @@ public class Author extends AbstractModel implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.publications, other.publications)) {
+        if (!Objects.equals(this.authorPublications, other.authorPublications)) {
             return false;
         }
         return true;

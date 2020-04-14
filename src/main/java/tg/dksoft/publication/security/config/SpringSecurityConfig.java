@@ -47,11 +47,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/rest/auth/signin").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/rest/publication/author").hasRole("ADMIN")
                 .antMatchers("/rest/publication/user").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfigurer(jwtTokenProvider));;
+                .apply(new JwtConfigurer(jwtTokenProvider));
     }
 
 }

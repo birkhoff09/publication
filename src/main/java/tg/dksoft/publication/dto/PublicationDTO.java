@@ -5,8 +5,9 @@
  */
 package tg.dksoft.publication.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import tg.dksoft.publication.enums.PublicationTypeEnum;
@@ -19,9 +20,10 @@ import tg.dksoft.publication.model.Publication;
  */
 public class PublicationDTO {
 
+    protected Long publicationId;
     protected String title;
     protected Date datePublication;
-    protected String typePublication;
+    private String typePublication;
     protected Set<AuthorDTO> authors;
 
     public PublicationDTO(Publication publication) {
@@ -32,23 +34,31 @@ public class PublicationDTO {
         } else {
             typePublication = PublicationTypeEnum.BLOG_POST.value();
         }
-        this.authors = new HashSet<>();
-        publication.getAuthors().forEach(author -> {
-            this.authors.add(new AuthorDTO(author.getFirstName(), author.getLastName()));
-        });
+        this.publicationId = publication.getId();
+//        this.authors = new HashSet<>();
+//        publication.getAuthors().forEach(author -> {
+//            this.authors.add(new AuthorDTO(author.getFirstName(), author.getLastName()));
+//        });
     }
 
-    public PublicationDTO(String title, Date datePublication, String typePublication) {
+    public PublicationDTO(String title, Date datePublication) {
         this.title = title;
         this.datePublication = datePublication;
-        this.typePublication = typePublication;
     }
 
-    public PublicationDTO(String title, Date datePublication, String typePublication, Set<AuthorDTO> authors) {
+    public PublicationDTO(String title, Date datePublication, Set<AuthorDTO> authors) {
         this.title = title;
         this.datePublication = datePublication;
-        this.typePublication = typePublication;
         this.authors = authors;
+    }
+
+    @JsonProperty("publication_id")
+    public Long getPublicationId() {
+        return publicationId;
+    }
+
+    public void setPublicationId(Long publicationId) {
+        this.publicationId = publicationId;
     }
 
     public String getTitle() {
@@ -59,19 +69,22 @@ public class PublicationDTO {
         this.title = title;
     }
 
+    @JsonProperty(value = "date_publication")
     public Date getDatePublication() {
         return datePublication;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     public void setDatePublication(Date datePublication) {
         this.datePublication = datePublication;
     }
 
-    public String getTypePublication() {
+    @JsonProperty(value = "type_publication")
+    protected String getTypePublication() {
         return typePublication;
     }
 
-    public void setTypePublication(String typePublication) {
+    protected void setTypePublication(String typePublication) {
         this.typePublication = typePublication;
     }
 

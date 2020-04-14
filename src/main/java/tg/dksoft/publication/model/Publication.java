@@ -13,11 +13,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -32,7 +31,7 @@ public abstract class Publication extends AbstractModel implements Serializable 
 
     protected String title;
     protected Date datePublication;
-    protected Set<Author> authors;
+    protected Set<AuthorPublication> authorPublications;
 
     @Column(name = "title", nullable = false, length = 255)
     public String getTitle() {
@@ -44,7 +43,7 @@ public abstract class Publication extends AbstractModel implements Serializable 
     }
 
     @Column(name = "date_publication", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getDatePublication() {
         return datePublication;
     }
@@ -53,17 +52,13 @@ public abstract class Publication extends AbstractModel implements Serializable 
         this.datePublication = datePublication;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "author_publication",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "publication_id"))
-    public Set<Author> getAuthors() {
-        return authors;
+    @OneToMany(mappedBy = "publication", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    public Set<AuthorPublication> getAuthorPublications() {
+        return authorPublications;
     }
 
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
+    public void setAuthorPublications(Set<AuthorPublication> authorPublications) {
+        this.authorPublications = authorPublications;
     }
 
     @Override
@@ -72,7 +67,7 @@ public abstract class Publication extends AbstractModel implements Serializable 
         hash = 71 * hash + Objects.hashCode(this.id);
         hash = 71 * hash + Objects.hashCode(this.title);
         hash = 71 * hash + Objects.hashCode(this.datePublication);
-        hash = 71 * hash + Objects.hashCode(this.authors);
+//        hash = 71 * hash + Objects.hashCode(this.authorPublications);
         return hash;
     }
 
@@ -97,9 +92,9 @@ public abstract class Publication extends AbstractModel implements Serializable 
         if (!Objects.equals(this.datePublication, other.datePublication)) {
             return false;
         }
-        if (!Objects.equals(this.authors, other.authors)) {
-            return false;
-        }
+//        if (!Objects.equals(this.authorPublications, other.authorPublications)) {
+//            return false;
+//        }
         return true;
     }
 

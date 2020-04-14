@@ -5,8 +5,10 @@
  */
 package tg.dksoft.publication.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import java.util.Set;
+import tg.dksoft.publication.enums.PublicationTypeEnum;
 import tg.dksoft.publication.model.BlogPost;
 
 /**
@@ -20,16 +22,31 @@ public class BlogPostDTO extends PublicationDTO {
     public BlogPostDTO(String url, BlogPost blogPost) {
         super(blogPost);
         this.url = url;
+        super.setTypePublication(PublicationTypeEnum.BLOG_POST.value());
     }
 
-    public BlogPostDTO(String url, String title, Date datePublication, String typePublication) {
-        super(title, datePublication, typePublication);
+    public BlogPostDTO(Long blogPostId, String url, String title, Date datePublication) {
+        super(title, datePublication);
+        this.publicationId = blogPostId;
         this.url = url;
+        super.setTypePublication(PublicationTypeEnum.BLOG_POST.value());
     }
 
-    public BlogPostDTO(String url, String title, Date datePublication, String typePublication, Set<AuthorDTO> authors) {
-        super(title, datePublication, typePublication, authors);
+    public BlogPostDTO(Long blogPostId, String url, String title, Date datePublication, Set<AuthorDTO> authors) {
+        super(title, datePublication, authors);
+        this.publicationId = blogPostId;
         this.url = url;
+        super.setTypePublication(PublicationTypeEnum.BLOG_POST.value());
+    }
+
+    @JsonProperty("blog_post_id")
+    @Override
+    public Long getPublicationId() {
+        return this.publicationId;
+    }
+
+    public void setPublication(Long publicationId) {
+        this.publicationId = publicationId;
     }
 
     public String getUrl() {

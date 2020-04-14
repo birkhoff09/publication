@@ -6,7 +6,6 @@
 package tg.dksoft.publication.service;
 
 import java.util.List;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
 /**
@@ -66,22 +65,19 @@ public interface IService<U, T> {
     /**
      *
      * @param criteria
-     * @return
      */
-    public Query createCriteriaQuery(CriteriaQuery criteria);
+    public void createCriteriaQuery(CriteriaQuery criteria);
 
     /**
      *
      * @param query
-     * @return
      */
-    public Query createSqlQuery(String query);
+    public void createSqlQuery(String query);
 
     /**
      *
      * @param query
-     * @return
      */
-    public Query createHqlQuery(String query);
+    public void createHqlQuery(String query);
 
 }

@@ -7,12 +7,8 @@ package tg.dksoft.publication.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -21,19 +17,7 @@ import javax.persistence.OneToMany;
 @Entity(name = "publisher")
 public class Publisher extends AbstractModel implements Serializable {
 
-//    private Long id;
     private String name;
-    private Set<Book> books; 
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
 
     @Column(name = "name", nullable = false, length = 255)
     public String getName() {
@@ -42,15 +26,6 @@ public class Publisher extends AbstractModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "publisher")
-    public Set<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Set<Book> books) {
-        this.books = books;
     }
 
     @Override

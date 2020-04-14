@@ -5,8 +5,10 @@
  */
 package tg.dksoft.publication.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
-import java.util.Set;
+import tg.dksoft.publication.enums.PublicationTypeEnum;
 import tg.dksoft.publication.model.Book;
 
 /**
@@ -16,24 +18,35 @@ import tg.dksoft.publication.model.Book;
 public class BookDTO extends PublicationDTO {
 
     private int pages;
-//    private String publisherName;
+
+    public BookDTO(Book book) {
+        super(book);
+        super.setTypePublication(PublicationTypeEnum.BOOK.value());
+        book.setPages(book.getPages());
+    }
 
     public BookDTO(int pages, Book book) {
         super(book);
+        super.setTypePublication(PublicationTypeEnum.BOOK.value());
         this.pages = pages;
 //        this.publisherName = publisherName;
     }
 
-    public BookDTO(int pages, String title, Date datePublication, String typePublication) {
-        super(title, datePublication, typePublication);
+    public BookDTO(Long bookId, int pages, String title, Date datePublication) {
+        super(title, datePublication);
         this.pages = pages;
-//        this.publisherName = publisherName;
+        this.publicationId = bookId;
+        super.setTypePublication(PublicationTypeEnum.BOOK.value());
     }
 
-    public BookDTO(int pages, String title, Date datePublication, String typePublication, Set<AuthorDTO> authors) {
-        super(title, datePublication, typePublication, authors);
-        this.pages = pages;
-//        this.publisherName = publisherName;
+    @JsonProperty("book_id")
+    @Override
+    public Long getPublicationId() {
+        return this.publicationId;
+    }
+
+    public void setPublication(Long publicationId) {
+        this.publicationId = publicationId;
     }
 
     public int getPages() {
@@ -44,12 +57,14 @@ public class BookDTO extends PublicationDTO {
         this.pages = pages;
     }
 
-//    public String getPublisherName() {
-//        return publisherName;
-//    }
-//
-//    public void setPublisherName(String publisherName) {
-//        this.publisherName = publisherName;
-//    }
+    @JsonIgnore
+    @Override
+    protected String getTypePublication() {
+        return super.getTypePublication();
+    }
 
+    @Override
+    protected void setTypePublication(String typePublication) {
+        super.setTypePublication(typePublication);
+    }
 }

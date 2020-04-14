@@ -26,7 +26,7 @@ public class UserServiceImpl extends ServiceImpl<Long, User> implements IUserSer
 
     UserRepository repository;
 
-    public UserServiceImpl(UserRepository repository, IGenericRepository<User> genericRepository) {
+    public UserServiceImpl(UserRepository repository, IGenericRepository<Long, User> genericRepository) {
         super(User.class, genericRepository);
         this.repository = repository;
     }

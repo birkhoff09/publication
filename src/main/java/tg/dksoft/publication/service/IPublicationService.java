@@ -5,6 +5,8 @@
  */
 package tg.dksoft.publication.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import tg.dksoft.publication.model.Publication;
 
 /**
@@ -12,5 +14,7 @@ import tg.dksoft.publication.model.Publication;
  * @author Birkhoff
  */
 public interface IPublicationService extends IService<Long, Publication> {
-    
+
+    public Page<Publication> findByPage(PageRequest pageRequest);
+
 }

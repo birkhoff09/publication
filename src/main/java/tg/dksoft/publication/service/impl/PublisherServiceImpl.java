@@ -24,7 +24,7 @@ public class PublisherServiceImpl extends ServiceImpl<Long, Publisher> implement
     PublisherRepository repository;
 
     @Autowired
-    public PublisherServiceImpl(PublisherRepository repository, IGenericRepository<Publisher> genericRepository) {
+    public PublisherServiceImpl(PublisherRepository repository, IGenericRepository<Long, Publisher> genericRepository) {
         super(Publisher.class, genericRepository);
         this.repository = repository;
     }

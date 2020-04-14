@@ -5,6 +5,7 @@
  */
 package tg.dksoft.publication.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import org.springframework.data.annotation.CreatedDate;
  * @author Birkhoff
  */
 @MappedSuperclass
-public abstract class AbstractModel {
+public abstract class AbstractModel implements Serializable {
 
     protected Long id;
     protected int version;

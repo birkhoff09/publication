@@ -10,9 +10,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import tg.dksoft.publication.model.Author;
+import tg.dksoft.publication.model.AuthorPublication;
 import tg.dksoft.publication.model.Book;
 import tg.dksoft.publication.model.Privilege;
 import tg.dksoft.publication.model.Publisher;
@@ -28,6 +30,7 @@ import tg.dksoft.publication.service.IUserService;
 
 @SpringBootApplication
 @EnableWebMvc
+@EnableAspectJAutoProxy
 @ComponentScan
 public class PublicationApplication implements CommandLineRunner {
 
@@ -61,7 +64,12 @@ public class PublicationApplication implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
+        if (userService.findAll().isEmpty()) {
+            this.initDatabase();
+        }
+    }
 
+    public void initDatabase() {
         // Create Privilege
         Privilege privilege1 = new Privilege();
         privilege1.setPrivilege("create-user");
@@ -136,25 +144,25 @@ public class PublicationApplication implements CommandLineRunner {
 
         // Create Author
         Author author1 = new Author();
-        author1.setFirstName("DENAKPO");
-        author1.setLastName("Ferdinand");
+        author1.setFirstName("JOHN");
+        author1.setLastName("Doe");
         authorService.save(author1);
 
         Author author2 = new Author();
-        author2.setFirstName("KARABOU");
-        author2.setLastName("Armand");
+        author2.setFirstName("JOHN");
+        author2.setLastName("Smith");
         authorService.save(author2);
 
         //Create Book
         Book book1 = new Book();
-        book1.setAuthors(Collections.singleton(author1));
+        book1.setAuthorPublications(Collections.singleton(new AuthorPublication(book1, author1)));
         book1.setPages(250);
         book1.setDatePublication(new Date());
         book1.setTitle("Mon premier livre");
         bookService.save(book1);
 
         Book book2 = new Book();
-        book2.setAuthors(Collections.singleton(author2));
+        book2.setAuthorPublications(Collections.singleton(new AuthorPublication(book2, author2)));
         book2.setPages(360);
         book2.setDatePublication(new Date());
         book2.setTitle("Mon deuxieme livre");

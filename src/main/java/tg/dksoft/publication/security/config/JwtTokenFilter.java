@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
+import tg.dksoft.publication.exceptions.InvalidJwtAuthenticationException;
 
 /**
+ * This Filter extract Authentication object from Token in Request Header and
+ * pass it to the securityContext
  *
  * @author Birkhoff
  */
@@ -29,11 +32,17 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
-        String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            Authentication auth = token != null ? jwtTokenProvider.getAuthentication(token) : null;
-            SecurityContextHolder.getContext().setAuthentication(auth);
+        try {
+            String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
+            if (token != null && jwtTokenProvider.validateToken(token)) {
+                Authentication auth = token != null ? jwtTokenProvider.getAuthentication(token) : null;
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
+            filterChain.doFilter(req, res);
+        } catch (InvalidJwtAuthenticationException ex) {
+            filterChain.doFilter(req, res);
+        } catch (IOException | ServletException ex) {
+            throw ex;
         }
-        filterChain.doFilter(req, res);
     }
 }

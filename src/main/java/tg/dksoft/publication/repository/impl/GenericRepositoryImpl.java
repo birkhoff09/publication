@@ -7,6 +7,7 @@ package tg.dksoft.publication.repository.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -19,13 +20,24 @@ import tg.dksoft.publication.repository.IGenericRepository;
  *
  * @author Birkhoff
  * @param <T>
+ * @param <U>
  */
 @Repository
 @Transactional
-public class GenericRepositoryImpl<T extends Serializable> implements IGenericRepository<T> {
+public class GenericRepositoryImpl<U extends Serializable, T extends Serializable> implements IGenericRepository<U, T> {
 
     @PersistenceContext
     EntityManager em;
+
+    @Override
+    public Optional<T> find(U id, Class<T> clazz) {
+        return Optional.ofNullable(em.find(clazz, id));
+    }
+
+    @Override
+    public Optional<List<T>> findAll(Class<T> clazz) {
+        return Optional.ofNullable(em.createQuery("From " + clazz.getName()).getResultList());
+    }
 
     @Override
     public T save(T t) {
@@ -84,5 +96,4 @@ public class GenericRepositoryImpl<T extends Serializable> implements IGenericRe
     public Query createHqlQuery(String query, Class c) {
         return em.createQuery(query, c);
     }
-
 }

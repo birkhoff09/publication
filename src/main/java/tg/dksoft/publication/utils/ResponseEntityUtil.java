@@ -18,6 +18,9 @@ import org.springframework.util.MultiValueMap;
  */
 public class ResponseEntityUtil {
 
+    private static final String RESULT_TOTAL_ROWS = "RESULT_TOTAL_ROWS";
+    private final static String RESULT_TOTAL_PAGES = "RESULT_TOTAL_PAGES";
+
     public static HttpHeaders getHeaders() {
         MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
         HttpHeaders headers = new HttpHeaders(multiValueMap);
@@ -69,6 +72,20 @@ public class ResponseEntityUtil {
      */
     public static ResponseEntity createGetResponseEntity(Object body) {
         return new ResponseEntity(body, getHeaders(), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param body
+     * @param totalPages
+     * @param totalElements
+     * @return
+     */
+    public static ResponseEntity createGetPageResponseEntity(Object body, int totalPages, long totalElements) {
+        HttpHeaders headers = getHeaders();
+        headers.add(RESULT_TOTAL_PAGES, String.valueOf(totalPages));
+        headers.add(RESULT_TOTAL_ROWS, String.valueOf(totalElements));
+        return new ResponseEntity(body, headers, HttpStatus.OK);
     }
 
     /**

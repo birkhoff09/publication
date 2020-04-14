@@ -9,8 +9,6 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -21,7 +19,6 @@ import javax.persistence.ManyToOne;
 public class Book extends Publication {
 
     private int pages;
-    private Publisher publisher;
 
     @Column(name = "pages")
     public int getPages() {
@@ -32,20 +29,10 @@ public class Book extends Publication {
         this.pages = pages;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 17 * hash + super.hashCode();
-        hash = 17 * hash + Objects.hashCode(this.publisher);
         return hash;
     }
 
@@ -68,9 +55,6 @@ public class Book extends Publication {
             return false;
         }
         if (!Objects.equals(super.getDatePublication(), other.getDatePublication())) {
-            return false;
-        }
-        if (!Objects.equals(this.publisher, other.publisher)) {
             return false;
         }
         return true;

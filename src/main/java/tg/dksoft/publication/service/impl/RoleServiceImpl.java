@@ -24,7 +24,7 @@ public class RoleServiceImpl extends ServiceImpl<Long, Role> implements IRoleSer
     RoleRepository repository;
 
     @Autowired
-    public RoleServiceImpl(RoleRepository repository, IGenericRepository<Role> genericRepository) {
+    public RoleServiceImpl(RoleRepository repository, IGenericRepository<Long, Role> genericRepository) {
         super(Role.class, genericRepository);
         this.repository = repository;
     }

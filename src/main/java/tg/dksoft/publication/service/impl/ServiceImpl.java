@@ -7,8 +7,8 @@ package tg.dksoft.publication.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import tg.dksoft.publication.exceptions.DocumentNotFoundException;
 import tg.dksoft.publication.repository.IGenericRepository;
 import tg.dksoft.publication.service.IService;
 
@@ -19,63 +19,63 @@ import tg.dksoft.publication.service.IService;
  * @param <T>
  */
 public abstract class ServiceImpl<U extends Serializable, T extends Serializable> implements IService<U, T> {
-
-    protected IGenericRepository<T> genericRepository;
+    
+    protected IGenericRepository<U, T> genericRepository;
     Class<T> clazz;
-
-    public ServiceImpl(Class<T> clazz, IGenericRepository<T> genericRepository) {
+    
+    public ServiceImpl(Class<T> clazz, IGenericRepository<U, T> genericRepository) {
         this.clazz = clazz;
         this.genericRepository = genericRepository;
     }
-
+    
     @Override
     public T find(U id) {
-        return (T) genericRepository.createHqlQuery("FROM " + clazz.getName() + " WHERE id=" + id).getSingleResult();
+        return genericRepository.find(id, clazz).orElseThrow(() -> new DocumentNotFoundException());
     }
-
+    
     @Override
     public List<T> findAll() {
-        return genericRepository.createHqlQuery("FROM " + clazz.getName()).getResultList();
+        return genericRepository.findAll(clazz).orElseThrow(() -> new DocumentNotFoundException());
     }
-
+    
     @Override
     public T save(T t) {
         return (T) genericRepository.save(t);
     }
-
+    
     @Override
     public List<T> saveAll(List<T> ts) {
         return genericRepository.saveAll(ts);
     }
-
+    
     @Override
     public T update(T t) {
         return (T) genericRepository.update(t);
     }
-
+    
     @Override
     public void delete(T t) {
         genericRepository.delete(t);
     }
-
+    
     @Override
     public void deleteAll(List<T> ts) {
         genericRepository.deleteAll(ts);
     }
-
+    
     @Override
-    public Query createCriteriaQuery(CriteriaQuery criteria) {
-        return genericRepository.createCriteriaQuery(criteria);
+    public void createCriteriaQuery(CriteriaQuery criteria) {
+        genericRepository.createCriteriaQuery(criteria).executeUpdate();
     }
-
+    
     @Override
-    public Query createSqlQuery(String query) {
-        return genericRepository.createSqlQuery(query);
+    public void createSqlQuery(String query) {
+        genericRepository.createSqlQuery(query).executeUpdate();
     }
-
+    
     @Override
-    public Query createHqlQuery(String query) {
-        return genericRepository.createHqlQuery(query);
+    public void createHqlQuery(String query) {
+        genericRepository.createHqlQuery(query).executeUpdate();
     }
-
+    
 }

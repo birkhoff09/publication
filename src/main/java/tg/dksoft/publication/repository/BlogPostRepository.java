@@ -6,10 +6,12 @@
 package tg.dksoft.publication.repository;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import tg.dksoft.publication.dto.BlogPostDTO;
+import tg.dksoft.publication.model.Author;
 import tg.dksoft.publication.model.BlogPost;
 
 /**
@@ -18,7 +20,11 @@ import tg.dksoft.publication.model.BlogPost;
  */
 public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
 
-    @Query(value = "SELECT new tg.dksoft.publication.dto.BlogPostDTO(p.url,p.title, p.datePublication, 'Blog') "
-            + "From publication p JOIN p.authors ap where ap.id =:authorId")
-    List<BlogPostDTO> findBlogPostByAuthor(Long authorId, Pageable pageable);
+    @Query(value = "SELECT new tg.dksoft.publication.dto.BlogPostDTO(b.id, b.url, b.title, b.datePublication) "
+            + "From BlogPost b WHERE :author MEMBER OF b.authorPublications ")
+    Page<BlogPostDTO> findBlogPostsByAuthor(Author author, Pageable pageable);
+
+    @Query(value = "SELECT new tg.dksoft.publication.dto.BlogPostDTO(b.id, b.url, b.title, b.datePublication) "
+            + "From BlogPost b WHERE :author MEMBER OF b.authorPublications ")
+    List<BlogPostDTO> findBlogPostsByAuthor(Author author);
 }

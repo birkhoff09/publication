@@ -7,6 +7,7 @@ package tg.dksoft.publication.repository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -14,8 +15,13 @@ import javax.persistence.criteria.CriteriaQuery;
  *
  * @author Birkhoff
  * @param <T>
+ * @param <U>
  */
-public interface IGenericRepository<T extends Serializable> {
+public interface IGenericRepository<U extends Serializable, T extends Serializable> {
+
+    public Optional<T> find(U id, Class<T> clazz);
+
+    public Optional<List<T>> findAll(Class<T> clazz);
 
     public T save(T t);
 
