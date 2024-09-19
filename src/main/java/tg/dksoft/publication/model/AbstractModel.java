@@ -6,12 +6,15 @@
 package tg.dksoft.publication.model;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Version;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -19,41 +22,20 @@ import org.springframework.data.annotation.CreatedDate;
  *
  * @author Birkhoff
  */
-public class AbstractModel {
-
-    private int version;
-    private Date createDate;
-    private Date updateDate;
-
+@Getter
+@Setter
+public abstract class AbstractModel  implements Serializable{
     @Version
-    public int getVersion() {
-        return version;
-    }
+    private int version;
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
 
     @CreatedDate
     @Column(name = "createDate", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+    private OffsetDateTime createDate;
 
     @UpdateTimestamp
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
+    private OffsetDateTime updateDate;
 }
